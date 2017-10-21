@@ -22,6 +22,8 @@ class player:
                 self.HP = self.HP + 2
             if chat == "int" or chat == "interupt":
                 self.Interupt = self.Interupt + 1
+	    if chat == "cheers" or chat == "Cheers"
+		self.cheers
 
 
 
@@ -31,3 +33,9 @@ class player:
             player.HP = player.HP - self.Attack
         self.Attack = 0
         self.Interupt = 0
+
+   def cheers:
+	self.Attack = self.Attack * 2
+	self.HP = self.HP + 5
+	self.Interrupt = self.Interrupt + 5
+	
