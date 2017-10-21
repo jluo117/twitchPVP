@@ -43,7 +43,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         c.cap('REQ', ':twitch.tv/commands')
         c.join(self.channel)
         c.privmsg(self.channel, "your streamer has started an epic fight")
-        c.privmsg(self.channel, "!attack to attack !int to interupt !heal to heal")
+        c.privmsg(self.channel, "!attack/atk to attack !interupt/int to interupt !heal to heal")
         self.c = c
         self.e = e
 
@@ -60,18 +60,16 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
 def main():
     game = Game("bloodyplayer415","animelover231")
-    user1 = []
-    user2 = []
     bots = []
 
-    bots.append(TwitchBot("bloodyplayer415", lambda channelID, message: user1.append(message),'9vom3faszykwz2v01okux2cr4gqpo2'))
+    bots.append(TwitchBot("bloodyplayer415", lambda channelID, message: game.stream1Chat.append(message),'9vom3faszykwz2v01okux2cr4gqpo2'))
     def onMessage(channelID, message):
-            user2.append(message)
-            if len(user1) >= 1 and len(user2) >= 1:
-                outPut = game.turn(user1,user2)
+            game.stream2Chat.append(message)
+            print(game.stream1Chat,game.stream2Chat)
+            if game.validSize() :
+                outPut = game.turn()
                 for bot in bots:
                     bot.post_round(outPut)
-
     bots.append(TwitchBot("animelover231", onMessage,'xe495r63aqmofcyeoj05bdbquecura'))
     for bot in bots:
         t = Thread(target=bot.start, args=())

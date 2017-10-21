@@ -1,24 +1,19 @@
 class player:
 
-    def __init__(self,name):
-        self.HP = 1
-        self.Interupt = 0
-        self.Attack = 0
-        self.Name = name
-    def turn(self,chatInput):
-        self.Interupt = 0
-        self.Attack = 0
 
-    def _init_(self,Name):
-        self.HP = 1
-        self.counter = 0
+    def __init__(self,Name):
+        self.HP = 12
+        self.Interupt = 0
         self.Attack = 0
-        self.Name = name
+        self.Name = Name
     def turn(self,chatInput):
+        self.Attack = 0
+        self.counter = 0
         for chat in chatInput:
-            if chat == "attack" or chat == "Attack":
+            chat = chat.lower()
+            if chat == "attack" or chat == "atk":
                 self.Attack = self.Attack + 1
-            if chat == "heal" or chat == "Heal":
+            if chat == "heal":
                 self.HP = self.HP + 2
             if chat == "int" or chat == "interupt":
                 self.Interupt = self.Interupt + 1
@@ -29,5 +24,6 @@ class player:
         self.Attack = self.Attack - (player.Interupt * 2)
         if self.Attack > 0:
             player.HP = player.HP - self.Attack
+            print(player.HP)
         self.Attack = 0
         self.Interupt = 0
