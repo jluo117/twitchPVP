@@ -77,7 +77,5 @@ def main():
         t = Thread(target=bot.start, args=())
         t.start()
 
-    print(user1)
-
 if __name__ == "__main__":
     main()
