@@ -10,7 +10,7 @@ class player:
         self.Attack = 0
 
     def _init_(self,Name):
-        self.HP = 10
+        self.HP = 1
         self.counter = 0
         self.Attack = 0
         self.Name = name
