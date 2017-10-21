@@ -43,7 +43,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         c.cap('REQ', ':twitch.tv/commands')
         c.join(self.channel)
         c.privmsg(self.channel, "your streamer has started an epic fight")
-        c.privmsg(self.channel, "!attack/atk to attack !interupt/int to interupt !heal to heal")
+        c.privmsg(self.channel, "!attack/atk to attack !interupt/int to interupt !heal to heal and don't forget to use your cheers")
         self.c = c
         self.e = e
 
