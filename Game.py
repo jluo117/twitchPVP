@@ -1,29 +1,29 @@
 from player import player
 class Game:
-    def __init__(self,player1Name.player2Name):
-        player1 = player(player1Name)
-        player2 = player(player2Name)
-        Winner = None
+    def __init__(self,player1Name,player2Name):
+        self.player1 = player(player1Name)
+        self.player2 = player(player2Name)
+        self.Winner = None
 
     def turn(self,streamer1Chat,streamer2Chat):
-        player1.turn(streamer1Chat,player2)
-        player2.turn(streamer2Chat,player2)
-        player1.Attack(player2)
-        player2.Attack(player1)
-        if player1.HP <= 0 and player2.HP <= 0:
-            if player1.HP < player2.HP:
-                Winner = player2
-                return player2.Name + "wins"
+        self.player1.turn(streamer1Chat)
+        self.player2.turn(streamer2Chat)
+        self.player1.AttackPlayer(self.player2)
+        self.player2.AttackPlayer(self.player1)
+        if self.player1.HP <= 0 and self.player2.HP <= 0:
+            if self.player1.HP < self.player2.HP:
+                self.Winner = self.player2
+                return self.player2.Name + " wins"
             else:
-                Winner = player1
-                return player1.Name + "wins"
-        if player1.HP <= 0:
-            Winner = player2
-            return player2.Name + "wins"
-        if player2.HP <= 0:
-            Winner = player1
-            return player1.Name + "wins"
-        return "Keep fighting"
+                self.Winner = self.player1
+                return self.player1.Name + " wins"
+        if self.player1.HP <= 0:
+            self.Winner = self.player2
+            return self.player2.Name + " wins"
+        if self.player2.HP <= 0:
+            self.Winner = self.player1
+            return self.player1.Name + " wins"
+        return "Keep fighting" + self.player1.Name + str(self.player1.HP) + "hp" + self.player2.Name + str(self.player2.HP) + " hp"
 
 
 

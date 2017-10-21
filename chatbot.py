@@ -12,16 +12,17 @@ import sys
 import irc.bot
 import requests
 from threading import Thread
-
+from Game import Game
 class TwitchBot(irc.bot.SingleServerIRCBot):
-    def __init__(self, channelID, callback):
+    def __init__(self, channelID, callback,token):
         self.client_id = 'jjedef9zz8klzeabdrd7earose2qdg'
-        self.token = '9vom3faszykwz2v01okux2cr4gqpo2'
+        self.token = token
         self.channel = '#' + channelID
         self.onMessage = callback
-
+        self.c = None
+        self.e = None
         # Get the channel id, we will need this for v5 API calls
-        url = 'https://api.twitch.tv/kraken/users?login=' + 'bloodyplayer415'
+        url = 'https://api.twitch.tv/kraken/users?login=' + channelID
         headers = {'Client-ID': self.client_id, 'Accept': 'application/vnd.twitchtv.v5+json'}
         r = requests.get(url, headers=headers).json()
         self.channel_id = r['users'][0]['_id']
@@ -30,7 +31,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         server = 'irc.chat.twitch.tv'
         port = 6667
         print ('Connecting to ' + server + ' on port ' + str(port) + '...')
-        irc.bot.SingleServerIRCBot.__init__(self, [(server, port, 'oauth:'+self.token)], 'bloodyplayer415', 'bloodyplayer415')
+        irc.bot.SingleServerIRCBot.__init__(self, [(server, port, 'oauth:'+self.token)], channelID, channelID)
 
 
     def on_welcome(self, c, e):
@@ -41,6 +42,10 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         c.cap('REQ', ':twitch.tv/tags')
         c.cap('REQ', ':twitch.tv/commands')
         c.join(self.channel)
+        c.privmsg(self.channel, "your streamer has started an epic fight")
+        c.privmsg(self.channel, "!attack to attack !int to interupt !heal to heal")
+        self.c = c
+        self.e = e
 
     def on_pubmsg(self, c, e):
 
@@ -48,51 +53,26 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         if e.arguments[0][:1] == '!':
             cmd = e.arguments[0].split(' ')[0][1:]
             print ('Received command: ' + cmd + self.channel)
-            self.do_command(e, cmd)
             self.onMessage(self.channel, cmd)
         return
-
-    def do_command(self, e, cmd):
-        c = self.connection
-
-        # Poll the API to get current game.
-        if cmd == "game":
-            url = 'https://api.twitch.tv/kraken/channels/' + self.channel_id
-            headers = {'Client-ID': self.client_id, 'Accept': 'application/vnd.twitchtv.v5+json'}
-            r = requests.get(url, headers=headers).json()
-            c.privmsg(self.channel, r['display_name'] + ' is currently playing ' + r['game'])
-
-        # Poll the API the get the current status of the stream
-        elif cmd == "title":
-            url = 'https://api.twitch.tv/kraken/channels/' + self.channel_id
-            headers = {'Client-ID': self.client_id, 'Accept': 'application/vnd.twitchtv.v5+json'}
-            r = requests.get(url, headers=headers).json()
-            c.privmsg(self.channel, r['display_name'] + ' channel title is currently ' + r['status'])
-
-        # Provide basic information to viewers for specific commands
-        elif cmd == "raffle":
-            message = "This is an example bot, replace this text with your raffle text."
-            c.privmsg(self.channel, message)
-        elif cmd == "schedule":
-            message = "This is an example bot, replace this text with your schedule text."
-            c.privmsg(self.channel, message)
-
-        # The command was not recognized
-        else:
-            c.privmsg(self.channel, "Did not understand command: " + cmd)
+    def post_round(self,message):
+        self.c.privmsg(self.channel,message)
 
 def main():
-
+    game = Game("bloodyplayer415","animelover231")
     user1 = []
     user2 = []
     bots = []
 
-    bots.append(TwitchBot("bloodyplayer415", lambda channelID, message: user1.append(message)))
+    bots.append(TwitchBot("bloodyplayer415", lambda channelID, message: user1.append(message),'9vom3faszykwz2v01okux2cr4gqpo2'))
     def onMessage(channelID, message):
-        user2.append(message)
-        print(user1, user2)
+            user2.append(message)
+            if len(user1) >= 1 and len(user2) >= 1:
+                outPut = game.turn(user1,user2)
+                for bot in bots:
+                    bot.post_round(outPut)
 
-    bots.append(TwitchBot("animelover231", onMessage))
+    bots.append(TwitchBot("animelover231", onMessage,'xe495r63aqmofcyeoj05bdbquecura'))
     for bot in bots:
         t = Thread(target=bot.start, args=())
         t.start()
