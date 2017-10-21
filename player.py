@@ -34,7 +34,7 @@ class player:
         self.Attack = 0
         self.Interupt = 0
 
-   def cheers:
+   def cheers(self):
 	self.Attack = self.Attack * 2
 	self.HP = self.HP + 5
 	self.Interrupt = self.Interrupt + 5
