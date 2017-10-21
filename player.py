@@ -2,7 +2,7 @@ class player:
 
 
     def __init__(self,Name):
-        self.HP = 12
+        self.HP = 15
         self.Interupt = 0
         self.Attack = 0
         self.cheers = 0

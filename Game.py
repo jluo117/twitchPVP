@@ -8,7 +8,7 @@ class Game:
         self.Winner = None
 
     def validSize(self):
-        if len(self.stream1Chat) > 1 and len(self.stream2Chat) > 1:
+        if len(self.stream1Chat) > 16 and len(self.stream2Chat) > 16:
             return True
         return False
     def turn(self):

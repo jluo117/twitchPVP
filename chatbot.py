@@ -55,22 +55,28 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             print ('Received command: ' + cmd + self.channel)
             self.onMessage(self.channel, cmd)
         return
-    def post_round(self,message):
+    def post_round(self,message,game):
         self.c.privmsg(self.channel,message)
 
 def main():
     game = Game("bloodyplayer415","animelover231")
     bots = []
-
-    bots.append(TwitchBot("bloodyplayer415", lambda channelID, message: game.stream1Chat.append(message),'9vom3faszykwz2v01okux2cr4gqpo2'))
-    def onMessage(channelID, message):
+    def UserMessage(channelID , message):
+        game.stream1Chat.append(message)
+        print(game.stream1Chat,game.stream2Chat)
+        if game.validSize():
+            outPut = game.turn()
+            for bot in bots:
+                bot.post_round(outPut,game)
+    bots.append(TwitchBot("bloodyplayer415", UserMessage,'9vom3faszykwz2v01okux2cr4gqpo2'))
+    def UserMessage2(channelID, message):
             game.stream2Chat.append(message)
             print(game.stream1Chat,game.stream2Chat)
             if game.validSize() :
                 outPut = game.turn()
                 for bot in bots:
-                    bot.post_round(outPut)
-    bots.append(TwitchBot("animelover231", onMessage,'xe495r63aqmofcyeoj05bdbquecura'))
+                    bot.post_round(outPut,game)
+    bots.append(TwitchBot("animelover231", UserMessage2,'xe495r63aqmofcyeoj05bdbquecura'))
     for bot in bots:
         t = Thread(target=bot.start, args=())
         t.start()
