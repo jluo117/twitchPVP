@@ -1,6 +1,6 @@
 class player:
     def _init_(self,Name):
-        self.HP = 100
+        self.HP = 1000
         self.Interupt = 0
         self.Attack = 0
         self.Name = name
