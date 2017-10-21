@@ -1,6 +1,6 @@
 TwitchRaid: a streamer vs streamer RPG game using python and Twitch Chatbot API. 
-## controls. 
+## controls 
 attack/atk   
-interupt/int.  
-heal  
+interupt/int  
+heal 
 cheers  
