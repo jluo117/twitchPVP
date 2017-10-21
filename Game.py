@@ -6,7 +6,7 @@ class Game:
         Winner = None
 
     def turn(self,streamer1Chat,streamer2Chat):
-        player1.turn(streamer1Chat,player2)
+        player1.turn(streamer1Chat,player1)
         player2.turn(streamer2Chat,player2)
         player1.Attack(player2)
         player2.Attack(player1)

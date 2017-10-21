@@ -43,6 +43,9 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             self.do_command(e, cmd)
         return
 
+	
+
+
 
 def main():
     if len(sys.argv) != 5:
@@ -57,8 +60,10 @@ def main():
     client_id2 = sys.argv[6]
     token2    = sys.argv[7]
     channel2 = sys.argv[8]
+
     bot = TwitchBot(username, client_id, token, channel)
     bot.start()
+	
 
 if __name__ == "__main__":
     main()
