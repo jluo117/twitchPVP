@@ -68,7 +68,7 @@ def main():
             outPut = game.turn()
             for bot in bots:
                 bot.post_round(outPut,game)
-    bots.append(TwitchBot("bloodyplayer415", UserMessage,'9vom3faszykwz2v01okux2cr4gqpo2'))
+    bots.append(TwitchBot("bloodyplayer415", UserMessage,'id'))
     def UserMessage2(channelID, message):
             game.stream2Chat.append(message)
             print(game.stream1Chat,game.stream2Chat)
@@ -76,7 +76,7 @@ def main():
                 outPut = game.turn()
                 for bot in bots:
                     bot.post_round(outPut,game)
-    bots.append(TwitchBot("animelover231", UserMessage2,'xe495r63aqmofcyeoj05bdbquecura'))
+    bots.append(TwitchBot("animelover231", UserMessage2,'id'))
     for bot in bots:
         t = Thread(target=bot.start, args=())
         t.start()
