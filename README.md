@@ -4,5 +4,5 @@ attack/atk
 interupt/int  
 heal  
 cheers  
-## regoniztion  
-Andrew Kennedy from the Twitch dev team for helping us with the API
+## recognition  
+Thanks to Andrew Kennedy from the Twitch dev team for helping us with the API
