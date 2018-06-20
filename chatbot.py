@@ -15,7 +15,7 @@ from threading import Thread
 from Game import Game
 class TwitchBot(irc.bot.SingleServerIRCBot):
     def __init__(self, channelID, callback,token):
-        self.client_id = 'jjedef9zz8klzeabdrd7earose2qdg'
+        self.client_id = 'null'
         self.token = token
         self.channel = '#' + channelID
         self.onMessage = callback
@@ -59,7 +59,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         self.c.privmsg(self.channel,message)
 
 def main():
-    game = Game("bloodyplayer415","animelover231")
+    game = Game("null","null")
     bots = []
     def UserMessage(channelID , message):
         game.stream1Chat.append(message)
@@ -68,7 +68,7 @@ def main():
             outPut = game.turn()
             for bot in bots:
                 bot.post_round(outPut,game)
-    bots.append(TwitchBot("bloodyplayer415", UserMessage,'id'))
+    bots.append(TwitchBot("null", UserMessage,'id'))
     def UserMessage2(channelID, message):
             game.stream2Chat.append(message)
             print(game.stream1Chat,game.stream2Chat)
@@ -76,7 +76,7 @@ def main():
                 outPut = game.turn()
                 for bot in bots:
                     bot.post_round(outPut,game)
-    bots.append(TwitchBot("animelover231", UserMessage2,'id'))
+    bots.append(TwitchBot("null", UserMessage2,'id'))
     for bot in bots:
         t = Thread(target=bot.start, args=())
         t.start()
